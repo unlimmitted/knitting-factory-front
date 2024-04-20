@@ -1,10 +1,9 @@
-import {createRouter, createWebHistory} from 'vue-router'
+import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
 import Recipes from '@/pages/Recipes.vue'
 import Orders from "@/pages/Orders.vue";
 import Warehouse from "@/pages/Warehouse.vue";
 import StartScreen from "@/components/StartScreen.vue";
 import CustomerScreen from "@/pages/CustomerScreen.vue";
-import OrdersInWork from "@/components/orders/OrdersInWork.vue";
 
 const routes = [
 	{

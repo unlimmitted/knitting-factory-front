@@ -41,7 +41,7 @@ export default {
 			}
 		},
 		getExistingProducts() {
-			axios.get("http://localhost:8080/get-product-in-warehouse")
+			axios.get("http://localhost:8080/api/v1/get-product-in-warehouse")
 				.then(response => {
 					this.existingProducts = response.data
 					console.log(this.existingProducts)
@@ -49,7 +49,7 @@ export default {
 			)
 		},
 		getExistingMaterial(){
-			axios.get("http://localhost:8080/get-material")
+			axios.get("http://localhost:8080/api/v1/get-material")
 				.then(response => {
 					this.existingMaterial = response.data
 					console.log(this.existingMaterial)

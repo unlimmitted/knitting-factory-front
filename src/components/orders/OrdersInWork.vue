@@ -8,7 +8,7 @@
 				<th>Дедлайн</th>
 				<th>Прогресс</th>
 			</tr>
-			<tr v-for="order in ordersInWorkProgress">
+			<tr v-for="order in store.getters.DONE">
 				<td>{{ order.id }}</td>
 				<td>{{ order.productName }}</td>
 				<td>{{ order.quantity }}</td>
@@ -27,9 +27,26 @@
 <script>
 
 import axios from "axios";
+import {store} from "@/store/main.js";
 
 export default {
-	props:["ordersInWorkProgress"]
+	props: ["ordersInWorkProgress"],
+	data() {
+		return {
+			data: []
+		}
+	},
+	mounted() {
+		console.log(this.$store.getters.DONE)
+	},
+	computed: {
+		store() {
+			return store
+		},
+		getOrderStat() {
+			return this.$store.getters.DONE
+		},
+	}
 }
 
 </script>

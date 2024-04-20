@@ -34,6 +34,7 @@ import axios from "axios";
 import AcceptedOrders from "@/components/orders/AcceptedOrders.vue";
 import CompletedOrders from "@/components/orders/CompletedOrders.vue";
 import OrdersInWork from "@/components/orders/OrdersInWork.vue";
+import SalesChart from "@/components/BarChart.vue";
 
 export default {
 	components: {OrdersInWork, CompletedOrders, AcceptedOrders, AllIncomingOrders, OrderingMaterials},
@@ -53,7 +54,7 @@ export default {
 	},
 	methods: {
 		getOrdersCollection(){
-			axios.get("http://localhost:8080/orders").then(
+			axios.get("http://localhost:8080/api/v1/orders").then(
 				response => {
 					this.completedOrders = response.data.completedOrders
 					this.ordersInWork = response.data.orderInWork
@@ -64,7 +65,7 @@ export default {
 			)
 		},
 		getAllMaterials() {
-			axios.get("http://localhost:8080/").then(
+			axios.get("http://localhost:8080/api/v1/").then(
 				response => {
 					this.materialList = response.data
 				}
@@ -75,7 +76,7 @@ export default {
 				id: null,
 				orderId: orderId
 			}
-			axios.post("http://localhost:8080/put-order-to-work", request).then(
+			axios.post("http://localhost:8080/api/v1/put-order-to-work", request).then(
 				response => {
 					this.acceptedOrders = response.data[0]
 					this.ordersInWorkProgress = response.data[1]
@@ -87,7 +88,7 @@ export default {
 				id: null,
 				orderId: orderId
 			}
-			axios.post("http://localhost:8080/make-order-accepted", request).then(
+			axios.post("http://localhost:8080/api/v1/make-order-accepted", request).then(
 				response => {
 					this.allIncomingOrders = response.data[0]
 					this.acceptedOrders = response.data[1]

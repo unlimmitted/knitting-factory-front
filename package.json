@@ -5,15 +5,25 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vue-cli-service build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@stomp/stompjs": "^6.1.2",
+    "@vue/cli-service": "^5.0.8",
     "axios": "^1.6.8",
-    "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "bootstrap": "^3.4.1",
+    "bootstrap-vue": "^2.23.1",
+    "chart.js": "^4.4.2",
+    "sockjs-client": "1.6.1",
+    "vue": "^3.4.22",
+    "vue-chartjs": "^5.3.1",
+    "vue-router": "^4.3.0",
+    "vuex": "^4.1.0",
+    "webstomp-client": "^1.2.6"
   },
   "devDependencies": {
+    "@types/sockjs-client": "^1.5.4",
     "@vitejs/plugin-vue": "^5.0.4",
     "vite": "^5.1.6"
   }

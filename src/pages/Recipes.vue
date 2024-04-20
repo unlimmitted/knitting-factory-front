@@ -48,7 +48,7 @@ export default {
 		sendNewRecipe(request) {
 
 			console.log(request)
-			axios.post("http://localhost:8080/create-recipe", request).then(response =>{
+			axios.post("http://localhost:8080/api/v1/create-recipe", request).then(response =>{
 				this.allRecipes = response.data
 				}
 			)
@@ -56,11 +56,11 @@ export default {
 	},
 
 	mounted() {
-		axios.get("http://localhost:8080/").then(response => {
+		axios.get("http://localhost:8080/api/v1/").then(response => {
 			this.availableMaterials = response.data
 			console.log(this.availableMaterials)
 		})
-		axios.get("http://localhost:8080/get-all-recipe").then(response => {
+		axios.get("http://localhost:8080/api/v1/get-all-recipe").then(response => {
 			this.allRecipes = response.data
 		})
 	}

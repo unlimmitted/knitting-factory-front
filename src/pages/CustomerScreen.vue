@@ -21,11 +21,11 @@ export default {
 	methods: {
 
 		sendNewOrder(request) {
-			axios.post("http://localhost:8080/create-new-order", request)
+			axios.post("http://localhost:8080/api/v1/create-new-order", request)
 		},
 
 		getAllProducts() {
-			axios.get("http://localhost:8080/get-all-recipe")
+			axios.get("http://localhost:8080/api/v1/get-all-recipe")
 				.then(response => this.productProduced = response.data )
 		}
 	}

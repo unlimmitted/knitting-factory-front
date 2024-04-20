@@ -55,7 +55,6 @@ export default {
 				name: currentElement.name,
 				price: currentElement.price,
 			}
-
 		},
 		sendNewOrder() {
 			let request = {
