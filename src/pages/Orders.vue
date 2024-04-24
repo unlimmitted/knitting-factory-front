@@ -8,15 +8,15 @@
 		</div>
 		<button class="accordion" @click="showAddingRecipe(1)">Ожидают добавления в очередь</button>
 		<div class="panel">
-			<AcceptedOrders @orderToWork="orderToWork" :ordersInWork="ordersInWork" :acceptedOrders="acceptedOrders"/>
+			<AcceptedOrders @orderToWork="orderToWork"/>
 		</div>
 		<button class="accordion" @click="showAddingRecipe(2)">Прогресс выполнения</button>
 		<div class="panel">
-			<OrdersInWork :ordersInWorkProgress="ordersInWorkProgress"/>
+			<OrdersInWork/>
 		</div>
 		<button class="accordion" @click="showAddingRecipe(3)">Выполненые заказы</button>
 		<div class="panel">
-			<CompletedOrders :completedOrders="completedOrders"/>
+			<CompletedOrders/>
 		</div>
 		<hr style="margin-top: 24px">
 		<button class="accordion" @click="showAddingRecipe(4)">Заказать материалы</button>
@@ -34,7 +34,6 @@ import axios from "axios";
 import AcceptedOrders from "@/components/orders/AcceptedOrders.vue";
 import CompletedOrders from "@/components/orders/CompletedOrders.vue";
 import OrdersInWork from "@/components/orders/OrdersInWork.vue";
-import SalesChart from "@/components/BarChart.vue";
 
 export default {
 	components: {OrdersInWork, CompletedOrders, AcceptedOrders, AllIncomingOrders, OrderingMaterials},
@@ -49,51 +48,27 @@ export default {
 		}
 	},
 	mounted() {
-		this.getOrdersCollection()
 		this.getAllMaterials()
 	},
 	methods: {
-		getOrdersCollection(){
-			axios.get("http://localhost:8080/api/v1/orders").then(
-				response => {
-					this.completedOrders = response.data.completedOrders
-					this.ordersInWork = response.data.orderInWork
-					this.acceptedOrders = response.data.acceptedOrder
-					this.allIncomingOrders = response.data.orders
-					this.ordersInWorkProgress = response.data.orderInWorkJoinOrders
-				}
-			)
-		},
 		getAllMaterials() {
-			axios.get("http://localhost:8080/api/v1/").then(
+			axios.get("http://localhost:8080/api/v1/get-all-material").then(
 				response => {
 					this.materialList = response.data
 				}
 			)
 		},
-		orderToWork(orderId) {
+		orderToWork(order) {
 			let request = {
 				id: null,
-				orderId: orderId
+				order: order,
+				done: 0.0,
+				needToDo: 0
 			}
-			axios.post("http://localhost:8080/api/v1/put-order-to-work", request).then(
-				response => {
-					this.acceptedOrders = response.data[0]
-					this.ordersInWorkProgress = response.data[1]
-				}
-			)
+			axios.post("http://localhost:8080/api/v1/put-order-to-work", order)
 		},
-		acceptOrder(orderId) {
-			let request = {
-				id: null,
-				orderId: orderId
-			}
-			axios.post("http://localhost:8080/api/v1/make-order-accepted", request).then(
-				response => {
-					this.allIncomingOrders = response.data[0]
-					this.acceptedOrders = response.data[1]
-				}
-			)
+		acceptOrder(order) {
+			axios.post("http://localhost:8080/api/v1/make-order-accepted", order)
 		},
 		showAddingRecipe(id) {
 			let acc = document.getElementsByClassName("accordion")[id]

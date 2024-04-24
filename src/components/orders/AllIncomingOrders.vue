@@ -1,5 +1,5 @@
 <template>
-	<div class="content" v-if="allIncomingOrders.length !== 0">
+	<div class="content" v-if="store.getters.INCOMING_ORDERS.length > 0">
 		<table>
 			<tr>
 				<th>Номер заказа</th>
@@ -9,13 +9,13 @@
 				<th>Дата заказа</th>
 				<th>Принять</th>
 			</tr>
-			<tr v-for="order in allIncomingOrders">
+			<tr v-for="order in store.getters.INCOMING_ORDERS">
 				<td>{{ order.id}}</td>
-				<td>{{ order.name }}</td>
+				<td>{{ order.product.name }}</td>
 				<td>{{ order.quantity }}</td>
-				<td>{{ order.deadline }}</td>
-				<td>{{ order.dateOfOrder }}</td>
-				<td><center><button @click="acceptOrder(order.id)" >Принять</button></center></td>
+				<td>{{ dateFormatter(order.deadline) }}</td>
+				<td>{{ dateFormatter(order.dateOfOrder) }}</td>
+				<td><center><button @click="acceptOrder(order)" >Принять</button></center></td>
 			</tr>
 		</table>
 	</div>
@@ -28,11 +28,28 @@
 
 <script>
 
+import {store} from "@/store/main.js";
+
 export default {
+	computed: {
+		store() {
+			return store
+		}
+	},
 	props: ["allIncomingOrders"],
 	methods: {
-		acceptOrder(id){
-			this.$emit("acceptOrder", id)
+		dateFormatter(dateString) {
+			const date = new Date(dateString)
+			const pad = (num) => num < 10 ? `0${num}` : num
+
+			const day = pad(date.getDate())
+			const month = pad(date.getMonth() + 1)
+			const year = date.getFullYear()
+
+			return `${day}.${month}.${year}`
+		},
+		acceptOrder(order){
+			this.$emit("acceptOrder", order)
 		}
 	}
 }

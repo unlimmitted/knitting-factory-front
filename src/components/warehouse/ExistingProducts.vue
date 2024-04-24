@@ -8,10 +8,10 @@
 				<th>Относится к заказу (номер заказа)</th>
 			</tr>
 			<tr v-for="product in existingProducts">
-				<td>{{ product.name }}</td>
+				<td>{{ product.product.name }}</td>
 				<td>{{ product.quantity }}</td>
-				<td>{{ product.price }}</td>
-				<td>{{ product.orderId }}</td>
+				<td>{{ product.product.price }}</td>
+				<td>{{ product.order.id }}</td>
 			</tr>
 		</table>
 	</div>

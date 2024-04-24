@@ -1,5 +1,5 @@
 <template>
-	<div class="content" v-if="acceptedOrders.length !== 0">
+	<div class="content" v-if="store.getters.ACCEPTED_ORDERS.length > 0">
 		<table class="acceptedOrdersTable">
 			<tr>
 				<th>Номер заказа</th>
@@ -9,15 +9,15 @@
 				<th>Дата заказа</th>
 				<th>В работу</th>
 			</tr>
-			<tr v-for="(order, index) in acceptedOrders">
+			<tr v-for="order in store.getters.ACCEPTED_ORDERS">
 				<td>{{ order.id }}</td>
-				<td>{{ order.name }}</td>
+				<td>{{ order.product.name }}</td>
 				<td>{{ order.quantity }}</td>
-				<td>{{ order.deadline }}</td>
-				<td>{{ order.dateOfOrder }}</td>
+				<td>{{ dateFormatter(order.deadline) }}</td>
+				<td>{{ dateFormatter(order.dateOfOrder) }}</td>
 				<td>
 					<center>
-						<button @click="orderToWork(order.id)">Пустить в работу</button>
+						<button @click="orderToWork(order)">Пустить в работу</button>
 					</center>
 				</td>
 			</tr>
@@ -32,16 +32,30 @@
 
 <script>
 
+import {store} from "@/store/main.js";
+
 export default {
-	props: ["acceptedOrders", "ordersInWork"],
+	computed: {
+		store() {
+			return store
+		}
+	},
 	data() {
 		return {}
 	},
 	methods: {
-		orderToWork(id) {
+		dateFormatter(dateString) {
+			const date = new Date(dateString)
+			const pad = (num) => num < 10 ? `0${num}` : num
 
-			this.$emit("orderToWork", id)
+			const day = pad(date.getDate())
+			const month = pad(date.getMonth() + 1)
+			const year = date.getFullYear()
 
+			return `${day}.${month}.${year}`
+		},
+		orderToWork(order) {
+			this.$emit("orderToWork", order)
 		}
 	}
 }

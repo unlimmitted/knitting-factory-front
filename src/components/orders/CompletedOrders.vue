@@ -1,7 +1,29 @@
 <template>
 	<div class="container">
-		<BarChart :chartData="ordersChart"/>
-		<BarChart :chartData="salesChart"/>
+		<div class="charts">
+			<div class="chart">
+				<div class="item">
+					<p>Статистика дохода</p>
+					<apexchart
+						width="600"
+						type="line"
+						:options="profitData.options"
+						:series="profitData.series"
+					/>
+				</div>
+			</div>
+			<div class="chart">
+				<div class="item">
+					<p>Статистика заказов</p>
+					<apexchart
+						width="600"
+						type="line"
+						:options="ordersData.options"
+						:series="ordersData.series"
+					/>
+				</div>
+			</div>
+		</div>
 	</div>
 	<hr>
 	<table class="acceptedOrdersTable" style="margin-top: 20px">
@@ -13,109 +35,107 @@
 			<th>Цена за единицу товара</th>
 			<th>Дата заказа</th>
 		</tr>
-		<tr v-for="order in completedOrders">
-			<td>{{ order.orderId }}</td>
-			<td>{{ order.productName }}</td>
+		<tr v-for="order in store.getters.COMPLETE_ORDERS">
+			<td>{{ order.id }}</td>
+			<td>{{ order.product.name }}</td>
 			<td>{{ order.quantity }}</td>
-			<td>{{ order.price }}</td>
-			<td>{{ order.productPrice }}</td>
-			<td>{{ order.dateOfOrder }}</td>
+			<td>{{ Math.ceil(order.quantity * order.product.price) }}</td>
+			<td>{{ order.product.price }}</td>
+			<td>{{ dateFormatter(order.dateOfOrder) }}</td>
 		</tr>
 	</table>
 </template>
 
 <script>
-import BarChart from "@/components/BarChart.vue";
-import axios from "axios";
+import {store} from "@/store/main.js";
+import {mapGetters} from "vuex";
 
 export default {
-	components: {BarChart},
-	props: ["completedOrders"],
-	data() {
-		return {
-			ordersStat: [],
-			salesChart: {
-				labels: [
-					"Январь", "Февраль", "Март",
-					"Апрель", "Май", "Июнь",
-					"Июль", "Август", "Сентябрь",
-					"Октябрь", "Ноябрь", "Декабрь"
-				],
-				datasets: [
-					{
-						label: "Статистика прибыли",
-						data: [],
-						backgroundColor: [
-							"rgba(255, 99, 132, 0.2)",
-							"rgba(255, 159, 64, 0.2)",
-							"rgba(255, 205, 86, 0.2)",
-							"rgba(75, 192, 192, 0.2)",
-							"rgba(54, 162, 235, 0.2)",
-							"rgba(153, 102, 255, 0.2)",
-							"rgba(201, 203, 207, 0.2)",
-							"rgba(255, 99, 132, 0.2)",
-							"rgba(255, 159, 64, 0.2)",
-							"rgba(255, 205, 86, 0.2)",
-							"rgba(75, 192, 192, 0.2)",
-							"rgba(54, 162, 235, 0.2)",
-						],
+	computed: {
+		store() {
+			return store
+		},
+		...mapGetters({
+			ordersStats: 'ORDERS_STATS'
+		}),
+		profitData() {
+			return {
+				months: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Ноябрь", "Декаберь"],
+				options: {
+					chart: {
+						id: 'vuechart-example'
+					},
+					xaxis: {
+						categories: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Ноябрь", "Декаберь"]
 					}
-				],
-
-			},
-			ordersChart: {
-				labels: [
-					"Январь", "Февраль", "Март",
-					"Апрель", "Май", "Июнь",
-					"Июль", "Август", "Сентябрь",
-					"Октябрь", "Ноябрь", "Декабрь"
-				],
-				datasets: [
-					{
-						label: "Статистика заказов",
-						data: [],
-						backgroundColor: [
-							"rgba(255, 99, 132, 0.2)",
-							"rgba(255, 159, 64, 0.2)",
-							"rgba(255, 205, 86, 0.2)",
-							"rgba(75, 192, 192, 0.2)",
-							"rgba(54, 162, 235, 0.2)",
-							"rgba(153, 102, 255, 0.2)",
-							"rgba(201, 203, 207, 0.2)",
-							"rgba(255, 99, 132, 0.2)",
-							"rgba(255, 159, 64, 0.2)",
-							"rgba(255, 205, 86, 0.2)",
-							"rgba(75, 192, 192, 0.2)",
-							"rgba(54, 162, 235, 0.2)",
-						],
+				},
+				series: [{
+					name: 'series-1',
+					data: this.ordersStats && this.ordersStats.length > 0 ? this.ordersStats[0] : []
+				}]
+			};
+		},
+		ordersData() {
+			return {
+				months: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Ноябрь", "Декаберь"],
+				options: {
+					chart: {
+						id: 'vuechart-example'
+					},
+					xaxis: {
+						categories: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Ноябрь", "Декаберь"]
 					}
-				],
-
-			}
+				},
+				series: [{
+					name: 'series-1',
+					data: this.ordersStats && this.ordersStats.length > 0 ? this.ordersStats[1] : []
+				}]
+			};
 		}
 	},
-	mounted() {
-		this.getOrderStat()
+	data() {
+		return {
+
+		}
 	},
 	methods: {
-		getOrderStat() {
-			axios.get("http://localhost:8080/api/v1/get-orders-stat").then(
-				response => {
-					this.salesChart.datasets[0].data = response.data[0]
-					this.ordersChart.datasets[0].data = response.data[1]
-				}
-			)
+		dateFormatter(dateString) {
+			const date = new Date(dateString)
+			const pad = (num) => num < 10 ? `0${num}` : num
+
+			const day = pad(date.getDate())
+			const month = pad(date.getMonth() + 1)
+			const year = date.getFullYear()
+
+			return `${day}.${month}.${year}`
 		}
 	}
 }
-
 </script>
 
 <style scoped>
 .container {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
 	margin: 10px;
+
+	.charts {
+		margin-top: 30px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+
+		.chart {
+
+			margin: auto;
+			.item {
+				display: flex;
+				flex-direction: column;
+				p{
+					margin: 0;
+				}
+				align-items: center;
+			}
+		}
+	}
+
 }
 </style>

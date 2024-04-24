@@ -9,7 +9,7 @@
 						<option selected disabled hidden>Выбери</option>
 						<option v-for="product in productProduced"
 								:value="productProduced.indexOf(product)">
-							{{ product.name }}
+							{{ product.products.name }}
 						</option>
 					</select>
 					<p>Количество</p>
@@ -52,19 +52,36 @@ export default {
 			let currentElement = this.productProduced[event.target.value]
 			this.selectedProduct = {
 				id: currentElement.id,
-				name: currentElement.name,
-				price: currentElement.price,
+				name: currentElement.products.name,
+				price: currentElement.products.price,
+				productionTime: currentElement.products.productionTime,
 			}
 		},
 		sendNewOrder() {
+			// let request = {
+			// 	productId: this.selectedProduct.id,
+			// 	name: this.selectedProduct.name,
+			// 	quantity: this.quantityProduct,
+			// 	deadline: new Date(this.deadline),
+			// 	dateOfOrder: new Date()
+			// }
 			let request = {
-				productId: this.selectedProduct.id,
-				name: this.selectedProduct.name,
+				id: null,
+				product: {
+					id: null,
+					name: this.selectedProduct.name,
+					price: this.selectedProduct.price,
+					productionTime: this.selectedProduct.productionTime,
+				},
 				quantity: this.quantityProduct,
 				deadline: new Date(this.deadline),
-				dateOfOrder: new Date()
+				dateOfOrder: new Date(),
+				inWork: false,
+				isAccepted: false,
+				isCompleted: false
 			}
 			this.$emit("sendNewOrder", request)
+
 			this.deadline = ''
 			this.quantityProduct = 0
 			this.selectedProductName = ''

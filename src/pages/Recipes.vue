@@ -46,8 +46,6 @@ export default {
 			}
 		},
 		sendNewRecipe(request) {
-
-			console.log(request)
 			axios.post("http://localhost:8080/api/v1/create-recipe", request).then(response =>{
 				this.allRecipes = response.data
 				}
@@ -56,9 +54,8 @@ export default {
 	},
 
 	mounted() {
-		axios.get("http://localhost:8080/api/v1/").then(response => {
+		axios.get("http://localhost:8080/api/v1/get-all-material").then(response => {
 			this.availableMaterials = response.data
-			console.log(this.availableMaterials)
 		})
 		axios.get("http://localhost:8080/api/v1/get-all-recipe").then(response => {
 			this.allRecipes = response.data
@@ -75,14 +72,6 @@ export default {
 	margin-left: 160px;
 	font-size: 28px;
 	padding: 0px 10px;
-
-	.addMaterialBtn {
-		margin-bottom: 10px;
-		margin-top: 10px;
-		width: 100%;
-		height: 40px;
-		font-size: 18px;
-	}
 
 	.accordion {
 		font-weight: bolder;

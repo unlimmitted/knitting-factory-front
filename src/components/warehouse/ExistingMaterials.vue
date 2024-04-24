@@ -8,14 +8,14 @@
 				<th>Суммарная стоиомсть (рубли)</th>
 			</tr>
 			<tr v-for="material in existingMaterial">
-				<td>{{ material.name }}</td>
+				<td>{{ material.material.name }}</td>
 				<td>{{ material.quantity }}</td>
-				<td>{{ material.typeName }}</td>
-				<td>{{ material.price }}</td>
+				<td>{{ material.material.typeName }}</td>
+				<td>{{ material.material.price * material.quantity }}</td>
 			</tr>
 		</table>
 	</div>
-	<div>
+	<div v-else>
 		<center>
 			<h3>Материалов на складе нет</h3>
 		</center>

@@ -1,36 +1,51 @@
 import Vuex from 'vuex';
-import axios from 'axios';
 
 export const store = new Vuex.Store({
 	state: {
-		order_done: []
+		ordersDone: [],
+		ordersStats: [],
+		completedOrders: [],
+		acceptedOrders: [],
+		incomingOrders: []
 	},
 
 	getters: {
-		DONE: state => {
-			return state.order_done
+		INCOMING_ORDERS: state => {
+			return state.incomingOrders
+		},
+		ORDERS_STATS: state => {
+			return state.ordersStats
+		},
+		ORDERS_DONE: state => {
+			return state.ordersDone
+		},
+		ACCEPTED_ORDERS: state => {
+			return state.acceptedOrders
+		},
+		COMPLETE_ORDERS: state => {
+			return state.completedOrders
 		},
 	},
 
 	mutations: {
-		SET_DONE: (state, payload) => {
-			state.order_done = payload
+		SET_INCOMING_ORDERS: (state, payload) => {
+			state.incomingOrders = payload
 		},
-
-		ADD_DONE: (state, payload) => {
-			state.order_done.push(payload)
+		SET_ACCEPTED_ORDERS: (state, payload) => {
+			state.acceptedOrders = payload
+		},
+		SET_COMPLETE_ORDERS: (state, payload) => {
+			state.completedOrders = payload
+		},
+		SET_ORDERS_STATS: (state, payload) => {
+			state.ordersStats = payload
+		},
+		SET_ORDERS_DONE: (state, payload) => {
+			state.ordersDone = payload
 		},
 	},
 
 	actions: {
-		// GET_DONE: async (context, payload) => {
-		// 	let {data} = await axios.get('http://localhost:8080/api/todo');
-		// 	context.commit('SET_TODO', data);
-		// },
 
-		// SAVE_DONE: async (context, payload) => {
-		// 	// let {data} = await axios.post('http://localhost:8080/api/todo');
-		// 	// context.commit('ADD_TODO', payload);
-		// },
 	},
 });
