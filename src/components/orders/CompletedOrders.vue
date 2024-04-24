@@ -35,13 +35,16 @@
 			<th>Цена за единицу товара</th>
 			<th>Дата заказа</th>
 		</tr>
-		<tr v-for="order in store.getters.COMPLETE_ORDERS">
+		<tr v-if="store.getters.COMPLETE_ORDERS.length > 0" v-for="order in store.getters.COMPLETE_ORDERS">
 			<td>{{ order.id }}</td>
 			<td>{{ order.product.name }}</td>
 			<td>{{ order.quantity }}</td>
 			<td>{{ Math.ceil(order.quantity * order.product.price) }}</td>
 			<td>{{ order.product.price }}</td>
 			<td>{{ dateFormatter(order.dateOfOrder) }}</td>
+		</tr>
+		<tr v-else>
+			<td colspan="6">Нет выполненных заказов</td>
 		</tr>
 	</table>
 </template>

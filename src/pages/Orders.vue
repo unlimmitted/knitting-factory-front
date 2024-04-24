@@ -21,7 +21,7 @@
 		<hr style="margin-top: 24px">
 		<button class="accordion" @click="showAddingRecipe(4)">Заказать материалы</button>
 		<div class="panel">
-			<OrderingMaterials :materialList="materialList"/>
+			<OrderingMaterials :materialList="materialInWarehouse"/>
 		</div>
 	</div>
 </template>
@@ -43,7 +43,7 @@ export default {
 			completedOrders: [],
 			allIncomingOrders: [],
 			acceptedOrders: [],
-			materialList: [],
+			materialInWarehouse: [],
 			ordersInWork: []
 		}
 	},
@@ -52,9 +52,9 @@ export default {
 	},
 	methods: {
 		getAllMaterials() {
-			axios.get("http://localhost:8080/api/v1/get-all-material").then(
+			axios.get("http://localhost:8080/api/v1/get-material-in-warehouse").then(
 				response => {
-					this.materialList = response.data
+					this.materialInWarehouse = response.data
 				}
 			)
 		},
