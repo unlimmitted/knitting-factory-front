@@ -4,7 +4,7 @@
 		<hr>
 		<button class="accordion" @click="showAddingRecipe(0)">Полученные заказы</button>
 		<div class="panel">
-			<AllIncomingOrders @acceptOrder="acceptOrder" :allIncomingOrders="allIncomingOrders"/>
+			<AllIncomingOrders/>
 		</div>
 		<button class="accordion" @click="showAddingRecipe(1)">Ожидают добавления в очередь</button>
 		<div class="panel">
@@ -39,12 +39,7 @@ export default {
 	components: {OrdersInWork, CompletedOrders, AcceptedOrders, AllIncomingOrders, OrderingMaterials},
 	data() {
 		return {
-			ordersInWorkProgress: [],
-			completedOrders: [],
-			allIncomingOrders: [],
-			acceptedOrders: [],
 			materialInWarehouse: [],
-			ordersInWork: []
 		}
 	},
 	mounted() {
@@ -59,16 +54,7 @@ export default {
 			)
 		},
 		orderToWork(order) {
-			let request = {
-				id: null,
-				order: order,
-				done: 0.0,
-				needToDo: 0
-			}
 			axios.post("http://localhost:8080/api/v1/put-order-to-work", order)
-		},
-		acceptOrder(order) {
-			axios.post("http://localhost:8080/api/v1/make-order-accepted", order)
 		},
 		showAddingRecipe(id) {
 			let acc = document.getElementsByClassName("accordion")[id]

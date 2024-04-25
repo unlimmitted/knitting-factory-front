@@ -15,11 +15,10 @@
 				<td>{{ dateFormatter(order.order.deadline) }}</td>
 				<td>
 					<fwb-progress
-						:progress="Math.ceil(order.done * 100 / order.needToDo)"
-						label-position="inside"
+						:progress="Math.floor(order.done * 100 / order.needToDo)"
+						label-position="outside"
 						label-progress
-						color="green"
-						size="lg"
+						size="sm"
 					/>
 				</td>
 			</tr>

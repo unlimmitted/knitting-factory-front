@@ -17,7 +17,7 @@
 				<td>{{ dateFormatter(order.dateOfOrder) }}</td>
 				<td>
 					<center>
-						<button @click="orderToWork(order)">Пустить в работу</button>
+						<button @click="acceptOrder(order)">Пустить в работу</button>
 					</center>
 				</td>
 			</tr>
@@ -54,7 +54,7 @@ export default {
 
 			return `${day}.${month}.${year}`
 		},
-		orderToWork(order) {
+		acceptOrder(order) {
 			this.$emit("orderToWork", order)
 		}
 	}

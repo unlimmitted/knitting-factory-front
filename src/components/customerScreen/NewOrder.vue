@@ -51,7 +51,7 @@ export default {
 		onChangeSelectorProduct(event) {
 			let currentElement = this.productProduced[event.target.value]
 			this.selectedProduct = {
-				id: currentElement.id,
+				id: currentElement.products.id,
 				name: currentElement.products.name,
 				price: currentElement.products.price,
 				productionTime: currentElement.products.productionTime,
@@ -68,7 +68,7 @@ export default {
 			let request = {
 				id: null,
 				product: {
-					id: null,
+					id: this.selectedProduct.id,
 					name: this.selectedProduct.name,
 					price: this.selectedProduct.price,
 					productionTime: this.selectedProduct.productionTime,
