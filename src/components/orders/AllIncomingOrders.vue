@@ -82,13 +82,13 @@ export default {
 			return new Promise((resolve) => setTimeout(resolve, milliseconds));
 		},
 		async getRecipeByProduct() {
-			await axios.post("http://localhost:8080/api/v1/get-recipe-by-product",
+			await axios.post("/api/v1/get-recipe-by-product",
 				this.$store.getters.INCOMING_ORDERS[this.currentOrderIndex].product).then(response => {
 				this.recipeProduct = response.data.material
 			})
 		},
 		async getMaterialsInWarehouseByMaterial(material) {
-			await axios.post("http://localhost:8080/api/v1/get-material-in-warehouse-by-material", material).then(
+			await axios.post("/api/v1/get-material-in-warehouse-by-material", material).then(
 				response => {
 					this.materialsInWarehouse.push(response.data)
 				}
@@ -133,7 +133,7 @@ export default {
 		},
 		acceptOrder() {
 			let order = this.$store.getters.INCOMING_ORDERS[this.currentOrderIndex]
-			axios.post("http://localhost:8080/api/v1/make-order-accepted", order)
+			axios.post("/api/v1/make-order-accepted", order)
 			this.closeModal()
 		}
 	}

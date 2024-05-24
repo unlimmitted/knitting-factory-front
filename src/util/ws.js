@@ -2,9 +2,12 @@ import SockJS from "sockjs-client/dist/sockjs"
 import {Stomp} from '@stomp/stompjs'
 import {store} from "@/store/main.js"
 
+let stompClient = null
+
 export function connect() {
-	const socket = new SockJS("http://localhost:8080/ws")
-	let stompClient = Stomp.over(socket)
+	stompClient = Stomp.over(function(){
+		return new SockJS('/ws')
+	})
 	stompClient.debug = function() {}
 	stompClient.connect({}, () => {
 		stompClient.subscribe('/topic/orders/',

@@ -47,14 +47,14 @@ export default {
 	},
 	methods: {
 		getAllMaterials() {
-			axios.get("http://localhost:8080/api/v1/get-material-in-warehouse").then(
+			axios.get("/api/v1/get-material-in-warehouse").then(
 				response => {
 					this.materialInWarehouse = response.data
 				}
 			)
 		},
 		orderToWork(order) {
-			axios.post("http://localhost:8080/api/v1/put-order-to-work", order)
+			axios.post("/api/v1/put-order-to-work", order)
 		},
 		showAddingRecipe(id) {
 			let acc = document.getElementsByClassName("accordion")[id]

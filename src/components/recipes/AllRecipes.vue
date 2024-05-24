@@ -41,7 +41,7 @@ export default {
 	data: () => ({}),
 	methods: {
 		deleteRecipe(recipe) {
-			axios.post("http://localhost:8080/api/v1/delete-recipe", recipe).then(response =>{
+			axios.post("/api/v1/delete-recipe", recipe).then(response =>{
 				this.allRecipes = response.data;
 			})
 		}

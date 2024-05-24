@@ -64,7 +64,7 @@ export default {
 				quantity: this.materialQuantity,
 				material: this.selectedMaterial
 			}
-			axios.post("http://localhost:8080/api/v1/ordering-material", request)
+			axios.post("/api/v1/ordering-material", request)
 
 			this.selectedMaterial = {
 				id: null,

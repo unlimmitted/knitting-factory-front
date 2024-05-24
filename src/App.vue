@@ -10,14 +10,11 @@
 </template>
 
 <script>
-
-
-import Recipes from "@/pages/Recipes.vue"
 import Menu from "@/components/Menu.vue"
 import {connect} from '@/util/ws'
 
 export default {
-	components: {Menu, Recipes},
+	components: {Menu},
 	data() {
 		return {
 			received_messages: [],
