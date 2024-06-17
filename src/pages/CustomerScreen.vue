@@ -1,5 +1,8 @@
 <template>
-		<NewOrder @sendNewOrder="sendNewOrder" :productProduced="productProduced"/>
+	<NewOrder
+		@sendNewOrder="sendNewOrder"
+		@setCustomer="setCustomer"
+		:productProduced="productProduced"/>
 </template>
 
 <script>
@@ -12,7 +15,8 @@ export default {
 	},
 	data() {
 		return {
-			productProduced: []
+			productProduced: [],
+			newOrder: null
 		}
 	},
 	mounted() {
@@ -26,7 +30,7 @@ export default {
 
 		getAllProducts() {
 			axios.get("/api/v1/get-all-recipe")
-				.then(response => this.productProduced = response.data )
+				.then(response => this.productProduced = response.data)
 		}
 	}
 }

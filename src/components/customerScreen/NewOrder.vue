@@ -4,6 +4,10 @@
 		<div class="orderDetail">
 			<div class="productsProduced">
 				<div class="selectors">
+					<p>Ваше имя</p>
+					<input type="text" v-model="this.customerName">
+					<p>Ваш номер телефона</p>
+					<input type="text" v-model="this.customerPhoneNumber">
 					<p>Товар</p>
 					<select @change="onChangeSelectorProduct($event)">
 						<option selected disabled hidden>Выбери</option>
@@ -40,6 +44,8 @@ export default {
 	],
 	data() {
 		return {
+			customerName: '',
+			customerPhoneNumber: '',
 			deadline: '',
 			quantityProduct: 0,
 			selectedProductName: '',
@@ -58,30 +64,29 @@ export default {
 			}
 		},
 		sendNewOrder() {
-			// let request = {
-			// 	productId: this.selectedProduct.id,
-			// 	name: this.selectedProduct.name,
-			// 	quantity: this.quantityProduct,
-			// 	deadline: new Date(this.deadline),
-			// 	dateOfOrder: new Date()
-			// }
 			let request = {
 				id: null,
-				product: {
-					id: this.selectedProduct.id,
-					name: this.selectedProduct.name,
-					price: this.selectedProduct.price,
-					productionTime: this.selectedProduct.productionTime,
-				},
-				quantity: this.quantityProduct,
-				deadline: new Date(this.deadline),
-				dateOfOrder: new Date(),
-				inWork: false,
-				isAccepted: false,
-				isCompleted: false
+				name: this.customerName,
+				phoneNumber: this.customerPhoneNumber,
+				orders: {
+					id: null,
+					product: {
+						id: this.selectedProduct.id,
+						name: this.selectedProduct.name,
+						price: this.selectedProduct.price,
+						productionTime: this.selectedProduct.productionTime,
+					},
+					quantity: this.quantityProduct,
+					deadline: new Date(this.deadline),
+					dateOfOrder: new Date(),
+					inWork: false,
+					isAccepted: false,
+					isCompleted: false
+				}
 			}
 			this.$emit("sendNewOrder", request)
-
+			this.customerName = ""
+			this.customerPhoneNumber = ""
 			this.deadline = ''
 			this.quantityProduct = 0
 			this.selectedProductName = ''

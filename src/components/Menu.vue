@@ -12,15 +12,16 @@
 			<li>
 				<router-link :to="{ name: 'Orders' }" class="link">Заказы</router-link>
 			</li>
+			<li>
+				<router-link :to="{ name: 'Providers' }" class="link">Поставщики</router-link>
+			</li>
 		</ul>
 	</div>
 </template>
 
 <script>
 
-export default {
-
-}
+export default {}
 
 </script>
 
@@ -50,7 +51,7 @@ export default {
 
 .menu {
 	height: 100%;
-	width: 160px;
+	width: 170px;
 	position: fixed;
 	z-index: 1;
 	top: 0;
